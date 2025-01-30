@@ -16,6 +16,10 @@ body {
   }
 }
 
+.note-form {
+  margin-bottom: 20px;
+}
+
 .notes-grid {
   display: grid;
   grid-template-columns: repeat(
