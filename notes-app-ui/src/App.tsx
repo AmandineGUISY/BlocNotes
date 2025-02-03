@@ -40,6 +40,12 @@ const App = () => {
   const [selectedNote,setSelectedNote] = 
     useState<Note | null>(null);
 
+  const handleNoteClick = (note:Note) => {
+    setSelectedNote(note);
+    SetTitle(note.title);
+    SetContent(note.content);
+  }
+
   const handleAddNote = (
     event: React.FormEvent
   ) => {
@@ -55,6 +61,33 @@ const App = () => {
     SetTitle("");
     SetContent("");
   };
+
+  const handleUpdateNote = (event: React.FormEvent) => {
+
+    event.preventDefault();
+
+    if (!selectedNote) {
+      return;
+    }
+    
+    const updateNote: Note = {
+      id: selectedNote.id,
+      title: title,
+      content: content,
+    }
+
+    const updateNoteList = notes.map((note) =>
+      note.id === selectedNote.id
+        ? updateNote
+        : note
+    )
+
+    setNotes(updateNoteList)
+    SetTitle("")
+    SetContent("")
+    setSelectedNote(null);
+  };
+
   return(
   <div className="app-container">
     <form
@@ -85,7 +118,10 @@ const App = () => {
     </form>
     <div className="notes-grid">
       {notes.map((note) => (
-        <div className="notes-item">
+        <div 
+          className="notes-item"
+          onClick={() => handleNoteClick(note)}
+        >
           <div className="notes-header">
             <button>X</button>
           </div>
